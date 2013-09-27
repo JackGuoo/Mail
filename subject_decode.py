@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # coding: utf-8
 #
-# spam mail subject garbled process
-# Author: guoxiangcheng
-# Mail: guoxiangcheng@comon.cn
+# Email subject decode
+# Author: xiangcheng.guo
+# Mail: xiangcheng.guo@gmail.com
 #
 # Date: 2013-09-23
 
