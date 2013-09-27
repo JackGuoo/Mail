@@ -12,7 +12,7 @@ import re
 import base64
 import quopri
 
-# Subject decode
+# Decode subject
 def subdecode(char,code,title):
     if code == 'B' or code == 'b':
         try:
@@ -23,12 +23,14 @@ def subdecode(char,code,title):
             dtitle = base64.decodestring(title[:lenx])
     elif code == 'Q' or code == 'q':
         dtitle = quopri.decodestring(title)
-    if char != 'utf-8':
-        dtitle = dtitle.decode(char, 'ignore')
+    
+    dtitle = dtitle.decode(char, 'ignore')
     
     return(dtitle)
 
-# Subject proc
+# Subject process
+# Default input strings 'utf-8'
+# Defautl output strings 'unicode'
 def subjectproc(subject):
     subdec = ''
     pattern = re.compile('(.*)=\?(.*)\?(\w?)\?(.*)\?=(.*)', re.S)
@@ -40,13 +42,15 @@ def subjectproc(subject):
             char = subtupl[1]
             code = subtupl[2]
             title = subtupl[3]
-            subdec = subdecode(char,code,title) + subdec
             if str(subtupl[4]) <> '':
-                subdec = subdec + subtupl[4]
+                subdec = subdecode(char,code,title) + subtupl[4] + subdec
+            else:
+                subdec = subdecode(char,code,title) + subdec
             
             subject = subtupl[0]
         else:
-            subdec = subject + subdec
+            sbjdec = subject.decode('utf8', 'ignore')
+            subdec = sbjdec + subdec
             subject = ''
     
     return(subdec)
